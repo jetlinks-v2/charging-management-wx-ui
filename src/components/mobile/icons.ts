@@ -1,0 +1,17 @@
+import {defineComponent,h} from 'vue'
+import {Icon} from 'vant'
+export const ArrowDownOutlined=defineComponent({name:'ArrowDownOutlined',setup:()=>()=>h(Icon,{name:'description'})})
+export const ArrowUpOutlined=defineComponent({name:'ArrowUpOutlined',setup:()=>()=>h(Icon,{name:'description'})})
+export const CalendarOutlined=defineComponent({name:'CalendarOutlined',setup:()=>()=>h(Icon,{name:'calendar-o'})})
+export const CheckCircleOutlined=defineComponent({name:'CheckCircleOutlined',setup:()=>()=>h(Icon,{name:'passed'})})
+export const CheckOutlined=defineComponent({name:'CheckOutlined',setup:()=>()=>h(Icon,{name:'success'})})
+export const DownOutlined=defineComponent({name:'DownOutlined',setup:()=>()=>h(Icon,{name:'arrow-down'})})
+export const FileTextOutlined=defineComponent({name:'FileTextOutlined',setup:()=>()=>h(Icon,{name:'description'})})
+export const GiftOutlined=defineComponent({name:'GiftOutlined',setup:()=>()=>h(Icon,{name:'gift-o'})})
+export const HomeOutlined=defineComponent({name:'HomeOutlined',setup:()=>()=>h(Icon,{name:'wap-home-o'})})
+export const LeftOutlined=defineComponent({name:'LeftOutlined',setup:()=>()=>h(Icon,{name:'arrow-left'})})
+export const LogoutOutlined=defineComponent({name:'LogoutOutlined',setup:()=>()=>h(Icon,{name:'revoke'})})
+export const RightOutlined=defineComponent({name:'RightOutlined',setup:()=>()=>h(Icon,{name:'arrow'})})
+export const RollbackOutlined=defineComponent({name:'RollbackOutlined',setup:()=>()=>h(Icon,{name:'description'})})
+export const UserOutlined=defineComponent({name:'UserOutlined',setup:()=>()=>h(Icon,{name:'user-o'})})
+export const WalletOutlined=defineComponent({name:'WalletOutlined',setup:()=>()=>h(Icon,{name:'balance-o'})})

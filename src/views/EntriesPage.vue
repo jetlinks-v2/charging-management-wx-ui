@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {Button as VanButton} from 'vant'
 import {reactive} from 'vue'
 import {useRoute} from 'vue-router'
 import LoadState from '../components/LoadState.vue'

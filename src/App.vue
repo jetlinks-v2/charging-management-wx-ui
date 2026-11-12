@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import {Button as VanButton} from 'vant'
+import {Icon as VanIcon} from 'vant'
 import {computed} from 'vue'
 import {useRoute,useRouter} from 'vue-router'
-import {state} from './services/session'
 import {roomsState,loadRooms,currentRoom} from './services/rooms'
 import LoadState from './components/LoadState.vue'
 import RoomSwitcher from './components/RoomSwitcher.vue'
@@ -9,7 +10,7 @@ import RoomPicker from './components/RoomPicker.vue'
 const route=useRoute(),router=useRouter(),login=computed(()=>route.path==='/login')
 const root=computed(()=>['/','/wallet','/profile'].includes(route.path))
 const titles:Record<string,string>={'/bills':'我的账单','/prepay':'费用预存','/confirm':'确认支付','/records':'缴费记录','/wallet':'预存余额','/profile':'我的'}
-function back(){if(window.history.state?.back)router.back();else void router.replace('/')}
+function back(){if(router.options.history.state.back)router.back();else void router.replace('/')}
 
 </script>
 <template>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {Icon as VanIcon} from 'vant'
 import {cents,entryAction,signedMoney,time} from '../services/format'
 import type {Entry} from '../types'
 defineProps<{entries:Entry[]}>()

@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import {Button as VanButton} from 'vant'
+import {Icon as VanIcon} from 'vant'
+import {Tab as VanTab} from 'vant'
+import {Tabs as VanTabs} from 'vant'
+import {Tag as VanTag} from 'vant'
 import {ref,reactive,watch,computed} from 'vue'
 import RoomSwitcher from '../components/RoomSwitcher.vue'
 import LoadState from '../components/LoadState.vue'

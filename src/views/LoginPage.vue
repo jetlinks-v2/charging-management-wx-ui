@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import MobileNotice from '../components/mobile/MobileNotice.vue'
+import BusinessField from '../components/mobile/BusinessField.vue'
+import BusinessForm from '../components/mobile/BusinessForm.vue'
+import {Button as VanButton} from 'vant'
+import {Field as VanField} from 'vant'
 import {reactive} from 'vue'
 import {useSession} from '../hooks/useSession'
 import LoginVerification from '../components/LoginVerification.vue'

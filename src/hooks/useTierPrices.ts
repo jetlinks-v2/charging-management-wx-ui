@@ -31,7 +31,9 @@ export function useTierPrices(source:ComputedRef<PriceSource|undefined>,load:(ro
   const current=()=>!disposed&&generation===version
   const worker=async()=>{
    while(current()&&next<pending.length){
-    const tier=pending[next++],key=tierKey(tier)
+    const tier=pending[next++]
+    if(!tier)break
+    const key=tierKey(tier)
     try{
      const requests=inputs(context.settings,tier,context.activityId),parts:ProposalPart[]=[]
      for(const input of requests){if(!current())return;const quote=await request(context.room,input,current);if(!current()||!quote)return;parts.push({input,quote})}

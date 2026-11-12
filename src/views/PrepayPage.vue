@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import {Button as VanButton} from 'vant'
+import {Icon as VanIcon} from 'vant'
+import {Loading as VanLoading} from 'vant'
+import {Popup as VanPopup} from 'vant'
+import {Tag as VanTag} from 'vant'
 import {reactive,ref} from 'vue'
 import {usePrepay} from '../hooks/usePrepay'
 import {tierKey} from '../hooks/useTierPrices'
@@ -25,7 +30,7 @@ const vm=reactive(usePrepay()),showPeriods=ref(false)
      <div class="month-prices">
       <button v-for="tier in vm.choices" :key="tierKey(tier)" :class="{selected:vm.tier.paidMonths===tier.paidMonths&&vm.tier.giftMonths===tier.giftMonths,unavailable:!!vm.pricing.prices[tierKey(tier)]?.error}" :aria-pressed="vm.tier.paidMonths===tier.paidMonths&&vm.tier.giftMonths===tier.giftMonths" @click="vm.tier=tier">
        <span class="month-label">{{tier.paidMonths}}个月<span v-if="tier.giftMonths" class="month-gift">赠{{tier.giftMonths}}个月</span></span>
-       <strong v-if="vm.pricing.prices[tierKey(tier)]?.quote" class="month-price">¥{{money(vm.pricing.prices[tierKey(tier)].quote!.payAmount)}}</strong>
+       <strong v-if="vm.pricing.prices[tierKey(tier)]?.quote" class="month-price">¥{{money(vm.pricing.prices[tierKey(tier)]!.quote!.payAmount)}}</strong>
        <span v-else-if="vm.pricing.prices[tierKey(tier)]?.error" class="price-state">暂不可用</span>
        <span v-else class="price-state"><van-loading size="16"/></span>
        <van-icon name="success" v-if="vm.tier.paidMonths===tier.paidMonths&&vm.tier.giftMonths===tier.giftMonths" class="month-check"/>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {Icon as VanIcon} from 'vant'
 import {computed} from 'vue'
 import {roomsState} from '../services/rooms'
 const location=computed(()=>{

@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import {Button as VanButton} from 'vant'
+import {Empty as VanEmpty} from 'vant'
+import {Icon as VanIcon} from 'vant'
+import {NoticeBar as VanNoticeBar} from 'vant'
+import {Popup as VanPopup} from 'vant'
 import {reactive,ref} from 'vue'
 import {useConfirmation} from '../hooks/usePrepay'
 import {money,subtract} from '../services/format'

@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import {Empty as VanEmpty} from 'vant'
+import {Icon as VanIcon} from 'vant'
+import {Popup as VanPopup} from 'vant'
+import {Search as VanSearch} from 'vant'
+import {Tag as VanTag} from 'vant'
 import {computed,ref,watch} from 'vue'
 import {roomsState,selectRoom} from '../services/rooms'
 import {nature} from '../services/format'

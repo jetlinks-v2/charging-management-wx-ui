@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {Tag as VanTag} from 'vant'
 import type {Quote} from '../types'
 import {money,periodType,subtract} from '../services/format'
 defineProps<{quote:Quote}>()

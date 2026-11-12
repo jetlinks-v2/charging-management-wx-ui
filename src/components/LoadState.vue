@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import {Button as VanButton} from 'vant'
+import {Empty as VanEmpty} from 'vant'
+import {Loading as VanLoading} from 'vant'
 defineProps<{loading?:boolean;error?:string;empty?:boolean;emptyText?:string}>()
 defineEmits<{retry:[]}>()
 </script>

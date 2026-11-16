@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import {inject,ref as popupRef} from 'vue'
+const popupTarget=inject('business-popup-target',popupRef<HTMLElement|string>('body'))
 import {Button as VanButton} from 'vant'
 import {Empty as VanEmpty} from 'vant'
 import {Icon as VanIcon} from 'vant'
@@ -26,5 +28,5 @@ const vm=reactive(useConfirmation()),periodsOpen=ref(false)
  <van-empty v-else description="请先选择预存月数"><router-link to="/prepay">选择预存月数</router-link></van-empty>
 </section>
 <div v-if="vm.proposal" class="dock"><div><span class="dock-label">预存金额</span><strong>¥{{money(vm.proposal.quote.payAmount)}}</strong></div><van-button type="primary" size="large" :disabled="vm.expired" :loading="vm.loading" @click="vm.confirm" native-type="button">确认支付</van-button></div>
-<van-popup v-model:show="periodsOpen" class="owner-popup" position="bottom" round closeable teleport="body" safe-area-inset-bottom><h2 class="popup-title">抵扣明细</h2><div class="popup-content"><PeriodLines v-if="vm.proposal" :quote="vm.proposal.quote"/></div></van-popup>
+<van-popup v-model:show="periodsOpen" class="owner-popup" position="bottom" round closeable :teleport="popupTarget" safe-area-inset-bottom><h2 class="popup-title">抵扣明细</h2><div class="popup-content"><PeriodLines v-if="vm.proposal" :quote="vm.proposal.quote"/></div></van-popup>
 </template>

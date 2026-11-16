@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import {inject,ref as popupRef} from 'vue'
+const popupTarget=inject('business-popup-target',popupRef<HTMLElement|string>('body'))
 import {Button as VanButton} from 'vant'
 import {Icon as VanIcon} from 'vant'
 import {Loading as VanLoading} from 'vant'
@@ -52,5 +54,5 @@ const vm=reactive(usePrepay()),showPeriods=ref(false)
   <div><span class="dock-label">预存金额</span><strong>{{vm.quote?'¥'+money(vm.quote.payAmount):vm.selected?.error?'暂不可用':'—'}}</strong></div>
   <van-button type="primary" size="large" :loading="vm.selected?.loading" :disabled="!vm.quote||!!vm.selected?.error||vm.expired" @click="vm.confirm" native-type="button">下一步</van-button>
  </div>
- <van-popup v-model:show="showPeriods" class="owner-popup" position="bottom" round closeable teleport="body" safe-area-inset-bottom><h2 class="popup-title">抵扣明细</h2><div class="popup-content"><PeriodLines v-if="vm.quote" :quote="vm.quote"/></div></van-popup>
+ <van-popup v-model:show="showPeriods" class="owner-popup" position="bottom" round closeable :teleport="popupTarget" safe-area-inset-bottom><h2 class="popup-title">抵扣明细</h2><div class="popup-content"><PeriodLines v-if="vm.quote" :quote="vm.quote"/></div></van-popup>
 </template>

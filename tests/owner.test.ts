@@ -2,7 +2,7 @@ import {test} from 'node:test'
 import assert from 'node:assert/strict'
 import {effectScope,nextTick} from 'vue'
 import {useRoomData,useRoomPage} from '../src/hooks/useRoomData'
-import {roomsState,resetRooms,selectRoom} from '../src/services/rooms'
+import {roomsState,resetRooms,selectRoom,loadRooms} from '../src/services/rooms'
 import {state} from '../src/services/session'
 import {months,subtract,cents} from '../src/services/format'
 import type {Room} from '../src/types'
@@ -75,4 +75,19 @@ test('收支明细显示服务端真实动作，收入和支出金额保留正�
  assert.equal(entryAction('TOPUP'),'费用预存');assert.equal(entryAction('REVOKE_TOPUP'),'预存撤销')
  assert.equal(entryAction('TRANSFER_OUT'),'转出');assert.equal(signedMoney('3.21'),'+3.21')
  assert.equal(signedMoney('-10.01'),'−10.01');assert.equal(signedMoney('0.00'),'0.00');assert.equal(signedMoney('1200.10'),'+1,200.10')
+})
+
+
+test('首次进入默认首个本人房屋，已有有效选择优先，撤权回退，无房屋不弹空选择',async()=>{
+ resetRooms();storage.clear()
+ state.session={token:'fixture',environmentId:'project',applicationId:'app'};state.authorization={user:{id:'owner'},permissions:[]}
+ const previousFetch=globalThis.fetch
+ let available=[room('one'),room('two')]
+ globalThis.fetch=async()=>new Response(JSON.stringify({status:200,result:available}))
+ try{
+  await loadRooms();assert.equal(roomsState.selected?.spaceId,'one');assert.equal(roomsState.choosing,false)
+  selectRoom(room('two'));await loadRooms();assert.equal(roomsState.selected?.spaceId,'two')
+  available=[room('one')];await loadRooms();assert.equal(roomsState.selected?.spaceId,'one');assert.equal(roomsState.choosing,false)
+  available=[];await loadRooms();assert.equal(roomsState.selected,undefined);assert.equal(roomsState.choosing,false)
+ }finally{globalThis.fetch=previousFetch;resetRooms();state.session=undefined;state.authorization=undefined;storage.clear()}
 })

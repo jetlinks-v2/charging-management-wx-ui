@@ -1,25 +1,21 @@
 <script setup lang="ts">
-import {Empty as VanEmpty} from 'vant'
-import {Icon as VanIcon} from 'vant'
-import {Popup as VanPopup} from 'vant'
-import {Search as VanSearch} from 'vant'
-import {Tag as VanTag} from 'vant'
-import {computed,ref,watch} from 'vue'
-import {roomsState,selectRoom} from '../services/rooms'
-import {nature} from '../services/format'
-const keyword=ref('')
-const choices=computed(()=>roomsState.rooms.filter(r=>(r.projectName+'/'+r.fullName).includes(keyword.value.trim())))
-watch(()=>roomsState.choosing,()=>{keyword.value=''})
+import { computed } from 'vue'
+import SelectField from './mobile/SelectField.vue'
+import { roomsState, selectRoom } from '../services/rooms'
+import { nature } from '../services/format'
+const roomKey = (room: { projectId: string; spaceId: string }) => `${room.projectId}:${room.spaceId}`
+const selected = computed(() => roomsState.selected ? roomKey(roomsState.selected) : undefined)
+const options = computed(() => roomsState.rooms.map(room => ({
+  value: roomKey(room), label: `${room.projectName} / ${room.fullName || room.name}`, description: nature(room.nature),
+})))
+function confirm(value: string | undefined) {
+  // Resolve the current authorized list again; never switch to a room removed while the sheet was open.
+  const room = roomsState.rooms.find(room => roomKey(room) === value)
+  if (room) selectRoom(room)
+}
 </script>
 <template>
- <van-popup v-model:show="roomsState.choosing" class="owner-popup owner-room-picker" position="bottom" round teleport="body" safe-area-inset-bottom :closeable="!!roomsState.selected" :close-on-click-overlay="!!roomsState.selected">
-  <h2 class="popup-title">选择我的房屋</h2>
-  <van-search v-model="keyword" placeholder="搜索项目或空间路径"/>
-  <div class="popup-content house-choices">
-   <button v-for="room in choices" :key="room.projectId+room.spaceId" class="house-choice" @click="selectRoom(room)">
-    <span><strong>{{room.projectName}} · {{room.name}}</strong><span class="room-location">{{room.fullName}}</span><van-tag type="primary" plain>{{nature(room.nature)}}</van-tag></span><van-icon v-if="room===roomsState.selected" name="success"/>
-   </button>
-   <van-empty v-if="!choices.length" description="没有匹配的房屋"/>
-  </div>
- </van-popup>
+  <SelectField v-model:show="roomsState.choosing" :model-value="selected" :options="options" :loading="roomsState.loading" title="选择我的房屋" :closable="!!roomsState.selected" @update:model-value="confirm">
+    <template #trigger><span hidden /></template>
+  </SelectField>
 </template>

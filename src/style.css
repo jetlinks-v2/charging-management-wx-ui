@@ -143,11 +143,11 @@ strong { font-weight: 600; }
 .month-price { font-size: 16px; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
 .month-gift { color: #91621d; font-size: 11px; white-space: nowrap; }
 .selected .month-gift { color: #def3ff; }
-.price-state { display: flex; align-items: center; min-height: 20px; color: var(--muted); font-size: 12px; }
+.price-state { display: flex; align-items: center; gap: 5px; min-height: 20px; color: var(--muted); font-size: 12px; }
 .selected .price-state { color: #e8f7ff; }
 .month-check { position: absolute; right: 5px; top: 5px; font-size: 9px; }
-.month-prices > button.unavailable { background: #edf3f8; color: #526b7e; }
-.month-prices > button.unavailable.selected { border-color: var(--accent); }
+.month-prices > button.unavailable { background: #edf3f8; color: #526b7e; border-color: #dbe7f0; opacity: 1; cursor: not-allowed; }
+.month-prices > button.unavailable .price-state { color: #526b7e; }
 .quote-summary .row h2 { font-size: 16px; }
 .quote-summary .detail-list { margin-top: 12px; }
 .block-link { width: 100%; display: block; padding: 16px 0; text-align: center; font-size: 14px; color: var(--accent); }

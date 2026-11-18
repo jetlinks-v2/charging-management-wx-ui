@@ -30,12 +30,12 @@ const vm=reactive(usePrepay()),showPeriods=ref(false)
     <section class="month-section">
      <div class="section-heading"><h2>{{vm.activity?'活动套餐':'预存月数'}}</h2></div>
      <div class="month-prices">
-      <button v-for="tier in vm.choices" :key="tierKey(tier)" :class="{selected:vm.tier.paidMonths===tier.paidMonths&&vm.tier.giftMonths===tier.giftMonths,unavailable:!!vm.pricing.prices[tierKey(tier)]?.error}" :aria-pressed="vm.tier.paidMonths===tier.paidMonths&&vm.tier.giftMonths===tier.giftMonths" @click="vm.tier=tier">
+      <button v-for="tier in vm.choices" :key="tierKey(tier)" :class="{selected:vm.tier.paidMonths===tier.paidMonths&&vm.tier.giftMonths===tier.giftMonths&&!vm.pricing.prices[tierKey(tier)]?.error,unavailable:!!vm.pricing.prices[tierKey(tier)]?.error}" :aria-pressed="vm.tier.paidMonths===tier.paidMonths&&vm.tier.giftMonths===tier.giftMonths&&!vm.pricing.prices[tierKey(tier)]?.error" :disabled="!!vm.pricing.prices[tierKey(tier)]?.error" type="button" @click="vm.tier=tier">
        <span class="month-label">{{tier.paidMonths}}个月<span v-if="tier.giftMonths" class="month-gift">赠{{tier.giftMonths}}个月</span></span>
        <strong v-if="vm.pricing.prices[tierKey(tier)]?.quote" class="month-price">¥{{money(vm.pricing.prices[tierKey(tier)]!.quote!.payAmount)}}</strong>
        <span v-else-if="vm.pricing.prices[tierKey(tier)]?.error" class="price-state">暂不可用</span>
-       <span v-else class="price-state"><van-loading size="16"/></span>
-       <van-icon name="success" v-if="vm.tier.paidMonths===tier.paidMonths&&vm.tier.giftMonths===tier.giftMonths" class="month-check"/>
+       <span v-else class="price-state" role="status"><van-loading size="14" color="currentColor"/>计算中</span>
+       <van-icon name="success" v-if="vm.tier.paidMonths===tier.paidMonths&&vm.tier.giftMonths===tier.giftMonths&&!vm.pricing.prices[tierKey(tier)]?.error" class="month-check"/>
       </button>
      </div>
      <p v-if="!vm.choices.length" class="empty-inline">当前房屋暂无可用套餐，请联系物业</p>
@@ -50,9 +50,9 @@ const vm=reactive(usePrepay()),showPeriods=ref(false)
    </div>
   </LoadState>
  </section>
- <div v-if="vm.settings.length" class="dock">
-  <div><span class="dock-label">预存金额</span><strong>{{vm.quote?'¥'+money(vm.quote.payAmount):vm.selected?.error?'暂不可用':'—'}}</strong></div>
-  <van-button type="primary" size="large" :loading="vm.selected?.loading" :disabled="!vm.quote||!!vm.selected?.error||vm.expired" @click="vm.confirm" native-type="button">下一步</van-button>
+ <div v-if="vm.settings.length" class="dock prepay-dock" :aria-busy="!!vm.selected?.loading">
+  <div class="dock-amount" role="status" aria-live="polite"><span class="dock-label">预存金额</span><strong v-if="vm.quote&&!vm.expired">¥{{money(vm.quote.payAmount)}}</strong><span v-else class="dock-state">{{vm.selected?.loading?'金额计算中':vm.selected?.error?'暂不可用':vm.expired?'金额已过期':'请选择预存月数'}}</span></div>
+  <van-button type="primary" size="large" :loading="vm.selected?.loading" loading-text="计算中" :disabled="!vm.quote||!!vm.selected?.loading||!!vm.selected?.error||vm.expired" @click="vm.confirm" native-type="button">下一步</van-button>
  </div>
  <van-popup v-model:show="showPeriods" class="owner-popup" position="bottom" round closeable :teleport="popupTarget" safe-area-inset-bottom><h2 class="popup-title">抵扣明细</h2><div class="popup-content"><PeriodLines v-if="vm.quote" :quote="vm.quote"/></div></van-popup>
 </template>

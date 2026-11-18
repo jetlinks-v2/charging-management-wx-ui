@@ -407,18 +407,13 @@
       "purpose": "Visible keyboard focus."
     },
     "backgroundImage": {
-      "asset": "src/assets/community-sky.webp",
-      "provenanceAsset": "src/assets/community-sky.webp.json",
-      "height": "310px",
-      "position": "center top",
-      "size": "100% 100%",
-      "repeat": "no-repeat",
-      "maskImage": "linear-gradient(#000 65%,transparent)",
-      "purpose": "Decorative architectural image behind upper page; no pointer events.",
-      "provenance": {
-        "prompt": "Origin: Unsplash photo-1460317442991-0ec209397118, https://images.unsplash.com/photo-1460317442991-0ec209397118 ; Unsplash License https://unsplash.com/license . Recoloured pale sky blue, mirrored and faded locally with Pillow for a decorative header background; not a photo of the user project.",
-        "createdAt": "2026-11-07T16:00:23.860Z"
-      }
+      "asset": "src/assets/owner-community.webp",
+      "provenanceAsset": "src/assets/owner-community.webp.json",
+      "width": "250px",
+      "position": "65% center",
+      "opacity": 0.4,
+      "maskImage": "linear-gradient(90deg,transparent,#000 65%)",
+      "purpose": "Approved decorative community illustration at right of room identity; not a photograph of the project."
     }
   },
   "components": [
@@ -428,7 +423,7 @@
       "refersTo": "primary-link",
       "description": "Result-page action. Height is a minimum height.",
       "html": "<a class=\"ds-primary-link\" href=\"#result\">Return to account</a>",
-      "css": ".ds-primary-link { background: var(--accent,#0879bc); color: #fff; display: flex; align-items: center; justify-content: center; min-height: 46px; border-radius: 12px; font-size: 15px; } .ds-primary-link:hover { color: #fff; background: #076ba7; } .ds-primary-link {font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif;text-decoration:none;} .ds-primary-link:focus-visible {outline:2px solid var(--accent,#0879bc);outline-offset:4px;}"
+      "css": ".ds-primary-link { background: var(--accent,#087bb5); color: #fff; display: flex; align-items: center; justify-content: center; min-height: 46px; border-radius: 12px; font-size: 15px; } .ds-primary-link:hover { color: #fff; background: #076ba7; } .ds-primary-link {font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif;text-decoration:none;} .ds-primary-link:focus-visible {outline:2px solid var(--accent,#087bb5);outline-offset:4px;}"
     },
     {
       "name": "Prepay entry",
@@ -436,7 +431,7 @@
       "refersTo": "prepay-entry",
       "description": "Home entry: 64px minimum height, 14px corners. It differs from the dock button.",
       "html": "<a class=\"ds-prepay-entry\" href=\"#prepay\"><strong>Prepay</strong><span>Choose months</span></a>",
-      "css": ".ds-prepay-entry { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: var(--accent,#0879bc); color: #fff; padding: 16px 18px; border-radius: 14px; margin-top: 12px; min-height: 64px; } .ds-prepay-entry:hover { background: #076ba7; color: #fff; } .ds-prepay-entry strong { font-size: 16px; } .ds-prepay-entry {font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif;text-decoration:none;} .ds-prepay-entry:focus-visible {outline:2px solid var(--accent,#0879bc);outline-offset:4px;}"
+      "css": ".ds-prepay-entry { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: var(--accent,#087bb5); color: #fff; padding: 16px 18px; border-radius: 14px; margin-top: 12px; min-height: 64px; } .ds-prepay-entry:hover { background: #076ba7; color: #fff; } .ds-prepay-entry strong { font-size: 16px; } .ds-prepay-entry {font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif;text-decoration:none;} .ds-prepay-entry:focus-visible {outline:2px solid var(--accent,#087bb5);outline-offset:4px;}"
     },
     {
       "name": "Input field",
@@ -444,7 +439,7 @@
       "refersTo": "input",
       "description": "Theme-configured 44px control with fully opaque muted placeholder.",
       "html": "<input class=\"ds-input\" aria-label=\"Mobile number\" placeholder=\"Mobile number\" />",
-      "css": ".ds-input {height:44px;border:1px solid #dbe7f0;border-radius:12px;background:#fff;color:var(--ink,#21394d);font:14px -apple-system,BlinkMacSystemFont,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif;caret-color:var(--accent,#0879bc);} .ds-input::placeholder {color:var(--muted,#526b7e);opacity:1;} .ds-input:focus-visible {outline:2px solid var(--accent,#0879bc);outline-offset:4px;}"
+      "css": ".ds-input {height:44px;border:1px solid #dbe7f0;border-radius:12px;background:#fff;color:var(--ink,#203c50);font:14px -apple-system,BlinkMacSystemFont,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif;caret-color:var(--accent,#087bb5);} .ds-input::placeholder {color:var(--muted,#586f80);opacity:1;} .ds-input:focus-visible {outline:2px solid var(--accent,#087bb5);outline-offset:4px;}"
     },
     {
       "name": "Activity choice",
@@ -452,7 +447,7 @@
       "refersTo": "activity-chip",
       "description": "Default and selected activity states; selected text uses the darker information blue.",
       "html": "<div class=\"ds-activity-options\"><button type=\"button\">Regular prepay</button><button class=\"ds-selected\" type=\"button\" aria-pressed=\"true\">Selected activity</button></div>",
-      "css": ".ds-activity-options { display: flex; flex-wrap: wrap; gap: 8px; } .ds-activity-options > button { display: flex; align-items: center; gap: 7px; padding: 9px 12px; background: #fff; border: 1px solid #d4e5f2; border-radius: 22px; font-size: 13px; text-align: left; max-width: 100%; } .ds-activity-options > .ds-selected { background: var(--tint,#e8f5ff); border-color: var(--accent,#0879bc); color: #086ba9; } .ds-activity-options {font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif;color:var(--ink,#21394d);} .ds-activity-options button:focus-visible {outline:2px solid var(--accent,#0879bc);outline-offset:4px;} .ds-activity-options button:disabled {opacity:.55;cursor:not-allowed;}"
+      "css": ".ds-activity-options { display: flex; flex-wrap: wrap; gap: 8px; } .ds-activity-options > button { display: flex; align-items: center; gap: 7px; padding: 9px 12px; background: #fff; border: 1px solid #d4e5f2; border-radius: 22px; font-size: 13px; text-align: left; max-width: 100%; } .ds-activity-options > .ds-selected { background: var(--tint,#dff1fc); border-color: var(--accent,#087bb5); color: #086ba9; } .ds-activity-options {font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif;color:var(--ink,#203c50);} .ds-activity-options button:focus-visible {outline:2px solid var(--accent,#087bb5);outline-offset:4px;} .ds-activity-options button:disabled {opacity:.55;cursor:not-allowed;}"
     },
     {
       "name": "Month amount choice",
@@ -460,7 +455,7 @@
       "refersTo": "month-option",
       "description": "Months and price in one compact choice. Demonstration amounts are illustrative.",
       "html": "<div class=\"ds-month-prices\"><button type=\"button\"><span class=\"ds-month-label\">3 months</span><strong class=\"ds-month-price\">300.00</strong></button><button class=\"ds-selected\" type=\"button\" aria-pressed=\"true\"><span class=\"ds-month-label\">6 months</span><strong class=\"ds-month-price\">600.00</strong></button><button type=\"button\"><span class=\"ds-month-label\">12 months</span><strong class=\"ds-month-price\">1,200.00</strong></button></div>",
-      "css": ".ds-month-prices { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; } .ds-month-prices > button { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; position: relative; background: #fff; border: 1px solid #dbe7f0; border-radius: 12px; min-width: 0; min-height: 68px; padding: 10px 5px; } .ds-month-prices > button.ds-selected { background: var(--accent,#0879bc); border-color: var(--accent,#0879bc); color: #fff; } .ds-month-label { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px; font-size: 13px; } .ds-month-price { font-size: 16px; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; letter-spacing: -.02em; } .ds-month-prices {font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif;color:var(--ink,#21394d);} .ds-month-prices button:focus-visible {outline:2px solid var(--accent,#0879bc);outline-offset:4px;} .ds-month-prices button:disabled {opacity:.55;cursor:not-allowed;} @media(max-width:350px){.ds-month-prices{gap:7px;}.ds-month-price{font-size:14px;}}"
+      "css": ".ds-month-prices { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; } .ds-month-prices > button { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 8px; position: relative; background: #fff; border: 1px solid #dbe7f0; border-radius: 12px; min-width: 0; min-height: 68px; padding: 10px 5px; } .ds-month-prices > button.ds-selected { background: var(--accent,#087bb5); border-color: var(--accent,#087bb5); color: #fff; } .ds-month-label { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px; font-size: 13px; } .ds-month-price { font-size: 16px; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; letter-spacing: -.02em; } .ds-month-prices {font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif;color:var(--ink,#203c50);} .ds-month-prices button:focus-visible {outline:2px solid var(--accent,#087bb5);outline-offset:4px;} .ds-month-prices button:disabled {opacity:.55;cursor:not-allowed;} @media(max-width:350px){.ds-month-prices{gap:7px;}.ds-month-price{font-size:14px;}}"
     },
     {
       "name": "Ledger surface",
@@ -468,7 +463,7 @@
       "refersTo": "list-surface",
       "description": "Continuous rows separated by quiet rules. Sample data is illustrative.",
       "html": "<div class=\"ds-list-surface\"><div class=\"ds-ledger-item\"><div class=\"ds-ledger-copy\"><h2>Prepay credit</h2><time>2026-11-08 09:00</time></div><strong class=\"ds-ledger-amount\">+300.00</strong></div><div class=\"ds-ledger-item\"><div class=\"ds-ledger-copy\"><h2>Monthly payment</h2><time>2026-11-08 08:00</time></div><strong class=\"ds-ledger-amount\">-100.00</strong></div></div>",
-      "css": ".ds-list-surface, .ds-record-stack { background: #fff; border-radius: 14px; padding: 0 var(--inset,18px); } .ds-ledger-item { display: flex; align-items: center; gap: 11px; padding: 18px 0; } .ds-ledger-item + .ds-ledger-item { border-top: 1px solid var(--line,#e8eff5); } .ds-ledger-copy { min-width: 0; flex: 1; } .ds-ledger-copy h2 { font-size: 14px; font-weight: 500; } .ds-ledger-copy time { display: block; margin-top: 5px; color: var(--muted,#526b7e); font-size: 12px; white-space: nowrap; } .ds-ledger-amount { font-size: 17px; font-variant-numeric: tabular-nums; white-space: nowrap; } .ds-list-surface {font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif;color:var(--ink,#21394d);} .ds-ledger-copy h2 {margin:0;line-height:1.5;} .ds-ledger-amount {font-weight:600;}"
+      "css": ".ds-list-surface, .ds-record-stack { background: #fff; border-radius: 14px; padding: 0 var(--inset,18px); } .ds-ledger-item { display: flex; align-items: center; gap: 11px; padding: 18px 0; } .ds-ledger-item + .ds-ledger-item { border-top: 1px solid var(--line,#e3edf3); } .ds-ledger-copy { min-width: 0; flex: 1; } .ds-ledger-copy h2 { font-size: 14px; font-weight: 500; } .ds-ledger-copy time { display: block; margin-top: 5px; color: var(--muted,#586f80); font-size: 12px; white-space: nowrap; } .ds-ledger-amount { font-size: 17px; font-variant-numeric: tabular-nums; white-space: nowrap; } .ds-list-surface {font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif;color:var(--ink,#203c50);} .ds-ledger-copy h2 {margin:0;line-height:1.5;} .ds-ledger-amount {font-weight:600;}"
     },
     {
       "name": "Balance panel",
@@ -476,15 +471,15 @@
       "refersTo": "balance-panel",
       "description": "Pale-blue account panel and divided account actions; sample balance is illustrative.",
       "html": "<section class=\"ds-wallet-account\"><h2>Available balance</h2><div class=\"ds-money-display\"><span class=\"ds-money-currency\">&#165;</span><strong>300<span class=\"ds-money-decimal\">.00</span></strong></div><div class=\"ds-account-actions\"><a href=\"#records\">Transactions</a><a href=\"#refund\">Refund</a></div></section>",
-      "css": ".ds-wallet-account { background: #e4f4ff; } .ds-money-display { display: inline-flex; align-items: baseline; gap: 3px; color: var(--ink,#21394d); font-variant-numeric: tabular-nums; white-space: nowrap; } .ds-money-currency { font-size: 19px; font-weight: 500; } .ds-money-display > strong { font-size: 38px; line-height: 1.2; font-weight: 650; letter-spacing: -.03em; } .ds-money-decimal { font-size: 24px; letter-spacing: 0; } .ds-account-actions { display: flex; border-top: 1px solid #c4def0; margin-top: 24px; padding-top: 16px; gap: 20px; } .ds-account-actions > a { color: #086ba9; display: flex; align-items: center; justify-content: space-between; flex: 1; gap: 8px; font-size: 14px; } .ds-account-actions > a + a { border-left: 1px solid #c4def0; padding-left: 20px; } .ds-wallet-account {border-radius:16px;padding:var(--inset,18px);color:var(--ink,#21394d);font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif;} .ds-wallet-account h2 {font-size:17px;font-weight:600;line-height:1.5;margin:0 0 20px;} .ds-account-actions a {text-decoration:none;} .ds-account-actions a:focus-visible {outline:2px solid var(--accent,#0879bc);outline-offset:4px;}"
+      "css": ".ds-wallet-account { background: #e4f4ff; } .ds-money-display { display: inline-flex; align-items: baseline; gap: 3px; color: var(--ink,#203c50); font-variant-numeric: tabular-nums; white-space: nowrap; } .ds-money-currency { font-size: 19px; font-weight: 500; } .ds-money-display > strong { font-size: 38px; line-height: 1.2; font-weight: 650; letter-spacing: -.03em; } .ds-money-decimal { font-size: 24px; letter-spacing: 0; } .ds-account-actions { display: flex; border-top: 1px solid #c4def0; margin-top: 24px; padding-top: 16px; gap: 20px; } .ds-account-actions > a { color: #086ba9; display: flex; align-items: center; justify-content: space-between; flex: 1; gap: 8px; font-size: 14px; } .ds-account-actions > a + a { border-left: 1px solid #c4def0; padding-left: 20px; } .ds-wallet-account {border-radius:16px;padding:var(--inset,18px);color:var(--ink,#203c50);font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif;} .ds-wallet-account h2 {font-size:17px;font-weight:600;line-height:1.5;margin:0 0 20px;} .ds-account-actions a {text-decoration:none;} .ds-account-actions a:focus-visible {outline:2px solid var(--accent,#087bb5);outline-offset:4px;}"
     },
     {
       "name": "Bottom navigation labels",
       "kind": "nav",
       "refersTo": "bottom-navigation",
-      "description": "Text-state preview of the three-entry navigation. Icons and fixed positioning remain in the application.",
-      "html": "<nav class=\"ds-bottom-nav\" aria-label=\"Main navigation\"><a class=\"ds-active\" href=\"#home\" aria-current=\"page\">Home</a><a href=\"#wallet\">Balance</a><a href=\"#profile\">Profile</a></nav>",
-      "css": ".ds-bottom-nav {display:flex;width:100%;max-width:480px;background:#fff;border-top:1px solid var(--line,#e8eff5);padding:9px var(--gutter,20px);font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif;} .ds-bottom-nav a {flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:var(--muted,#526b7e);font-size:11px;min-height:45px;text-decoration:none;} .ds-bottom-nav a.ds-active {color:var(--accent,#0879bc);font-weight:600;} .ds-bottom-nav a:focus-visible {outline:2px solid var(--accent,#0879bc);outline-offset:4px;}"
+      "description": "Text-state preview of the four-entry navigation. Icons and fixed positioning remain in the application.",
+      "html": "<nav class=\"ds-bottom-nav\" aria-label=\"Main navigation\"><a class=\"ds-active\" href=\"#home\" aria-current=\"page\">Home</a><a href=\"#bills\">Bills</a><a href=\"#wallet\">Balance</a><a href=\"#profile\">Profile</a></nav>",
+      "css": ".ds-bottom-nav {display:flex;width:100%;max-width:440px;background:#fff;border-top:1px solid var(--line,#e3edf3);padding:9px var(--gutter,20px);font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif;} .ds-bottom-nav a {flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:var(--muted,#586f80);font-size:11px;min-height:45px;text-decoration:none;} .ds-bottom-nav a.ds-active {color:var(--accent,#087bb5);font-weight:600;} .ds-bottom-nav a:focus-visible {outline:2px solid var(--accent,#087bb5);outline-offset:4px;}"
     },
     {
       "name": "Semantic tags",
@@ -492,12 +487,12 @@
       "refersTo": "semantic-tag",
       "description": "Compact status tags use 5px corners, independent from activity pill shape.",
       "html": "<div class=\"ds-tags\"><span class=\"ds-ant-tag ds-ant-tag-green\">Completed</span><span class=\"ds-ant-tag ds-ant-tag-orange\">Processing</span><span class=\"ds-ant-tag ds-ant-tag-blue\">Current</span></div>",
-      "css": ".ds-ant-tag { margin-top: 10px; } .ds-ant-tag-green { color: #237343; background: #eef8ee; } .ds-ant-tag-orange { color: #9b5106; background: #fff4e2; } .ds-ant-tag-blue { color: #086ba9; background: #e8f5ff; } .ds-tags {display:flex;gap:8px;font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif;}"
+      "css": ".ds-ant-tag { margin-top: 10px; } .ds-ant-tag-green { color: #237343; background: #eef8ee; } .ds-ant-tag-orange { color: #9b5106; background: #fff4e2; } .ds-ant-tag-blue { color: #086ba9; background: #dff1fc; } .ds-tags {display:flex;gap:8px;font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif;}"
     }
   ],
   "narrative": {
     "northStar": "社区服务账本",
-    "overview": "以可读、可信、便于核对的社区账本承载缴费、预存和余额查询。天蓝主题、浅蓝灰画布与清楚的白色内容分组建立稳定的视觉秩序；房屋、月份、金额与交易状态构成主要信息，避免营销式表达。\n\n信息以紧凑连续行组织，白色区域只用于必要分组。页面顶部以淡蓝化建筑实景作为低对比装饰，向下渐淡，账目区域保持清楚。房屋身份直接落在页面背景上，金额依靠字号、字重和对齐建立重点，避免大白块、同尺寸卡片墙与卡片套卡片。本文件记录当前实现，抽取来源为 `src/style.css`、`src/styles/layout.css` 和 `src/main.ts`；不作为功能或浏览器测试通过证明。",
+    "overview": "正式业主端采用浅天蓝账单主面板、并排水电燃气与物业费预存入口、三项能源用量和房屋/账单/余额/我的四个导航。天蓝主题、右侧渐隐社区建筑素材与白色连续账目区域。实际样式以 src/styles/owner.css 为准。",
     "keyCharacteristics": [
       "天蓝主操作、淡蓝建筑背景与克制的白色内容分组。",
       "房屋、月份、金额优先，账单和流水保持连续行阅读。",
@@ -523,14 +518,14 @@
     ],
     "dos": [
       "**Do** 使用天蓝主操作、淡蓝建筑背景和必要的白色分组保持账本秩序。",
-      "**Do** 保持全页（20px）边距，宽度不超过（350px）时使用（16px），应用最大宽度保持（480px）。",
+      "**Do** 保持全页（20px）边距，宽度不超过（350px）时使用（16px），应用最大宽度保持（440px）。",
       "**Do** 让房屋、月份、金额和交易状态成为每一屏的主要信息。",
-      "**Do** 直接展示各月份选项的价格，确认页使用正式支付文案；渠道不可用时仅在操作后提示，不展示开发说明或未完成支付的成功页。",
+      "**Do** 直接展示各月份选项的价格，确认页使用正式支付文案；金额预存确认页在操作前明确支付不可用，不展示未完成支付的成功页。",
       "**Do** 为固定底栏预留空间、适配安全区域，并保留可见键盘焦点与减少动态效果支持。"
     ],
     "donts": [
-      "**Don't** 使用大白块、同尺寸卡片墙、卡片套卡片或装饰性大金额面板稀释账目信息。",
-      "**Don't** 在预存流程重新加入科目标准、试算入口或必须另点一步才能看到的月份价格。",
+      "**Don't** 为每行账目添加卡片或阴影；首页保留一个浅天蓝账单主面板。",
+      "**Don't** 在物业费按月预存中增加专业选择；水电燃气金额预存按实际房屋设置选择标准，并在确认页展示归属。",
       "**Don't** 通过泛滥的小字、营销文案或虚构状态填充页面，也不要让背景图干扰金额与正文阅读。",
       "**Don't** 把登录页、结果页或桌面外壳的局部尺寸和阴影扩展为通用页面规则。"
     ]

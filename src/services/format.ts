@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
-export const money=(value?:string)=>value===undefined?'—':new Intl.NumberFormat('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2}).format(Number(value))
-export const time=(value?:string)=>value&&dayjs(value).isValid()?dayjs(value).format('YYYY-MM-DD HH:mm'):'—'
+export const money=(value?:string|null)=>value==null||value.trim()===''||!Number.isFinite(Number(value))?'—':new Intl.NumberFormat('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2}).format(Number(value))
+export const time=(value?:string|number)=>value&&dayjs(typeof value==='string'&&/^\d{13}$/.test(value)?Number(value):value).isValid()?dayjs(typeof value==='string'&&/^\d{13}$/.test(value)?Number(value):value).format('YYYY-MM-DD HH:mm'):'—'
 export const period=(start:string,end:string)=>`${start} 至 ${end}`
 export const nature=(value:string)=>({owner:'业主',tenant:'租户',other:'其他'}[value]||'客户')
 export const periodType=(value:string)=>({ARREARS:'历史欠费',CURRENT:'当前账期',FUTURE:'未来账期'}[value]||'费用账期')

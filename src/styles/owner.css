@@ -1,0 +1,85 @@
+/* 已确认的业主端视觉：一处账单主面板，服务并列；共享业务逻辑与组件保持原样。 */
+.app-shell.app-shell {
+ --accent:#087bb5; --ink:#203c50; --muted:#586f80; --canvas:#f5f8fb; --line:#e3edf3; --tint:#dff1fc;
+ --van-primary-color:#087bb5; --van-text-color:#203c50; --van-text-color-2:#586f80;
+ max-width:440px; background:var(--canvas); color:var(--ink);
+}
+.app-shell.app-shell::before { display:none; }
+.app-shell .topbar { height:calc(64px + env(safe-area-inset-top)); background:var(--canvas); grid-template-columns:64px minmax(0,1fr) 64px; }
+.app-shell .topbar h1 { font-size:18px; }
+.app-shell .topbar .van-button { width:44px; height:44px; margin-left:-8px; }
+.app-shell .page { padding-bottom:105px; }
+.app-shell .with-dock { padding-bottom:calc(132px + env(safe-area-inset-bottom)); }
+.app-shell .room-switch { position:relative; padding:18px 0 26px; min-height:118px; gap:12px; isolation:isolate; }
+.app-shell .room-switch::before { content:""; position:absolute; inset:-12px calc(-1 * var(--gutter)) 0 auto; width:250px; background:url('../assets/owner-community.webp') 65% center/cover no-repeat; opacity:.4; filter:saturate(.65); mask-image:linear-gradient(90deg,transparent,#000 65%); z-index:-1; pointer-events:none; }
+.app-shell .room-name strong { font-size:23px; }
+.room-project { display:block; color:var(--accent); font-size:12px; margin-bottom:10px; }
+.app-shell .room-location { color:var(--muted); font-size:12px; }
+.app-shell .switch-label { background:#fffffff0; min-height:40px; color:var(--ink); font-size:12px; }
+.app-shell .bottom-nav,.app-shell .dock { max-width:440px; }
+.app-shell .bottom-nav { padding-inline:8px; }
+.app-shell .bottom-nav a { min-height:52px; font-size:12px; }
+.app-shell .bottom-nav a.active>.van-icon { background:none; padding:0; margin:0; }
+.app-shell .home-statement { background:#dff1fc; padding:22px 20px; }
+.home-statement .money-display { color:var(--accent); margin:8px 0; }
+.home-statement .money-display>strong { font-size:43px; }
+.home-statement .money-decimal { font-size:28px; }
+.statement-caption { color:var(--muted); font-size:12px; }
+.home-bill-lines { margin-top:20px; }
+.home-bill-lines>a { display:flex; align-items:center; justify-content:space-between; gap:12px; color:var(--ink); border-top:1px solid #bdddeb; padding:12px 0; font-size:12px; }
+.home-bill-lines strong { font-size:15px; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.statement-action { display:flex; align-items:center; justify-content:space-between; margin-top:22px; min-height:43px; border-top:1px solid #bdddeb; padding-top:15px; font-size:13px; }
+.service-pair { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:20px 0 24px; }
+.service-pair>a { min-width:0; position:relative; background:#fff; border-radius:14px; padding:16px 12px; color:var(--ink); min-height:126px; }
+.service-pair strong,.service-pair>a>span:last-of-type { display:block; white-space:nowrap; }
+.service-pair strong { font-size:15px; margin-top:14px; }
+.service-pair>a>span:last-of-type { font-size:12px; color:var(--muted); margin-top:6px; }
+.service-icon { font-size:26px; color:var(--accent); }
+.service-arrow { position:absolute; top:22px; right:12px; font-size:12px; color:var(--muted); }
+.energy-tiles { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+.energy-tiles>a { min-width:0; padding:15px 4px; text-align:center; background:#fff; border-radius:12px; color:var(--ink); }
+.energy-tiles strong { display:block; font-size:20px; font-variant-numeric:tabular-nums; margin:12px 0 8px; overflow-wrap:anywhere; }
+.energy-tiles small { font-size:11px; color:var(--muted); }
+.hint { font-size:12px; color:var(--muted); line-height:1.7; }
+.grow { flex:1; min-width:0; }
+.energy-card { background:#fff; border-radius:16px; padding:20px; margin-bottom:16px; }
+.sky-panel { background:#dff1fc; }
+.energy-card .section-heading h2 { display:flex; align-items:center; gap:7px; }
+.energy-card .section-heading h2>.van-icon { color:var(--accent); }
+.energy-card>.hint { margin-top:8px; }
+.energy-metrics { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-bottom:14px; }
+.energy-metrics span { display:block; font-size:12px; color:var(--muted); }
+.energy-metrics strong { display:block; margin-top:10px; font-size:22px; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
+.energy-metrics small,.usage-total small { font-size:12px; font-weight:400; color:var(--muted); }
+.energy-actions { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:16px; padding-top:14px; border-top:1px solid var(--line); font-size:13px; }
+.energy-actions>span { font-size:12px; color:var(--muted); }
+.callout { padding:15px 16px; color:var(--muted); font-size:12px; line-height:1.85; background:#eaf3f9; border-radius:12px; margin-top:18px; }
+.inline-warning,.inline-error { font-size:13px; line-height:1.7; color:#a13d31; margin:10px 0 16px; }
+.inline-warning { background:#fff2ea; padding:12px; border-radius:10px; }
+.month-filter,.bill-filter { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--muted); }
+.bill-filter { justify-content:space-between; margin-bottom:16px; }
+.app-shell select { color:var(--ink); background:#fff; border:1px solid #d1e3ec; border-radius:9px; min-height:38px; max-width:100%; padding:6px 10px; font:inherit; }
+.usage-total { font-size:36px; font-variant-numeric:tabular-nums; margin:14px 0; }
+.usage-row { display:flex; align-items:center; gap:10px; min-height:58px; font-size:12px; border-bottom:1px solid var(--line); }
+.usage-row strong { min-width:45px; text-align:right; font-variant-numeric:tabular-nums; }
+.usage-row small { color:var(--muted); font-size:10px; min-width:40px; text-align:right; }
+.usage-track { height:5px; border-radius:3px; background:#edf3f7; overflow:hidden; }
+.usage-track i { display:block; height:100%; border-radius:3px; background:#7cbce0; }
+.deposit-setting { display:flex; align-items:center; gap:12px; justify-content:space-between; margin:16px 0; font-size:13px; }
+.deposit-setting select { max-width:65%; }
+.amount-options { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.amount-options button { background:#fff; border:1px solid var(--line); border-radius:12px; padding:18px 4px; font-variant-numeric:tabular-nums; font-size:15px; }
+.amount-options button.selected { background:#dff1fc; color:var(--accent); border-color:#78b9de; }
+.amount-input-label { display:block; font-size:13px; margin:24px 0 10px; color:var(--muted); }
+.amount-input { display:flex; gap:10px; background:#fff; border:1px solid #d1e3ec; border-radius:12px; padding:14px 16px; align-items:center; font-size:24px; }
+.amount-input input { min-width:0; width:100%; border:0; outline:0; background:transparent; font-size:24px; font-variant-numeric:tabular-nums; }
+.unavailable-payment { margin-top:22px; }
+.account-row { display:flex; gap:12px; align-items:center; padding:19px 0; color:var(--ink); border-bottom:1px solid var(--line); }
+.account-row>span { flex:1; min-width:0; overflow-wrap:anywhere; }
+.account-row small { display:block; color:var(--muted); font-size:12px; margin-top:6px; }
+.account-row>strong { font-variant-numeric:tabular-nums; font-size:18px; }
+.account-row>.van-icon { font-size:11px; color:var(--muted); }
+.ledger-copy small { display:block; color:var(--muted); font-size:11px; margin-top:6px; }
+.help-page h2:not(:first-child) { margin-top:25px; }
+.help-page p { margin-top:12px; color:var(--muted); font-size:14px; }
+@media(max-width:350px) { .service-pair { gap:8px; } .service-pair>a { padding:14px 10px; } .service-pair>a>span:last-of-type { font-size:11px; } .energy-card { padding:16px; } .energy-metrics strong { font-size:20px; } .usage-row { gap:6px; } }

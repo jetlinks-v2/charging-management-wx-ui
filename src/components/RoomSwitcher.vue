@@ -12,6 +12,6 @@ const location=computed(()=>{
 })
 </script>
 <template><button class="room-switch" @click="roomsState.choosing=true">
- <span class="room-name"><strong>{{roomsState.selected?roomsState.selected.projectName+' · '+roomsState.selected.name:'选择我的房屋'}}</strong><span v-if="location" class="room-location">{{location}}</span></span>
- <span class="switch-label">切换 <van-icon name="arrow-down"/></span>
+ <span class="room-name"><span v-if="roomsState.selected" class="room-project">{{roomsState.selected.projectName}}</span><strong>{{roomsState.selected?(location?location+' · ':'')+roomsState.selected.name:'选择我的房屋'}}</strong><span v-if="roomsState.selected" class="room-location">{{roomsState.selected.customerName}}的房屋</span></span>
+ <span class="switch-label">切换房屋 <van-icon name="arrow-down"/></span>
 </button></template>

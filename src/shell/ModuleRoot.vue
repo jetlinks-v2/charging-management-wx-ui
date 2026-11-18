@@ -13,6 +13,7 @@ import {mountBusinessStyles} from './styles'
 import {mountBusinessViewport} from './viewport'
 import businessCss from '../style.css?inline'
 import mobileCss from '../components/mobile/mobile.css?inline'
+import ownerCss from '../styles/owner.css?inline'
 import {loadRooms,resetRooms} from '../services/rooms'
 const context=useMobileAppContext(),root=ref<HTMLElement>(),ready=ref(false),error=ref(''),generation=ref(0)
 provideBusinessNavigation(`/applications/${jetlinksMobile.id}`)
@@ -40,7 +41,7 @@ async function start(){
  }catch(cause){if(current===attempt)error.value=cause instanceof Error?cause.message:'应用加载失败'}
 }
 watch(()=>[context.project.value?.code,context.application.value?.id,context.application.value?.templateCode],()=>{void start()},{flush:'sync'})
-onMounted(()=>{removeViewport=mountBusinessViewport(root.value!);removeStyles=mountBusinessStyles([businessCss,mobileCss],'finance-business');void start()})
+onMounted(()=>{removeViewport=mountBusinessViewport(root.value!);removeStyles=mountBusinessStyles([businessCss,mobileCss,ownerCss],'finance-business');void start()})
 onBeforeUnmount(()=>{attempt++;dispose();clearSession(false);resetRooms();removeStyles();removeViewport()})
 </script>
 <template><section ref="root" class="finance-business official-module"><div ref="scroll" class="business-scroll"><VanEmpty v-if="error||shellState.error" :description="error||shellState.error"><VanButton v-if="!shellState.error" @click="start">重新加载</VanButton></VanEmpty><BusinessApp v-else-if="ready" :key="generation"/><VanLoading v-else vertical>正在连接应用</VanLoading></div></section></template>
@@ -64,11 +65,11 @@ onBeforeUnmount(()=>{attempt++;dispose();clearSession(false);resetRooms();remove
   overscroll-behavior-y: contain;
   -webkit-overflow-scrolling: touch;
 }
-.official-module :deep(.app-shell) { min-height: 100%; max-width: none; padding-top: 0; padding-bottom: 0; }
+.official-module :deep(.app-shell) { min-height: 100%; max-width: 440px; padding-top: 0; padding-bottom: 0; }
 .official-module :deep(.van-config-provider) { min-height: 0; }
 .official-module :deep(.topbar) { height: 58px; padding-top: 0; }
 .official-module :deep(.bottom-nav),
-.official-module :deep(.dock) { max-width: none; }
+.official-module :deep(.dock) { max-width: 440px; }
 .official-module :deep(.van-popup) { max-height: 100%; }
 .official-module :deep(.van-dialog) { top: 50%; max-height: 100%; overflow-y: auto; }
 </style>

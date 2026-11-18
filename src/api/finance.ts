@@ -1,9 +1,12 @@
 import {request} from './http'
-import type {Room,Pager,Bill,Account,Entry,PaymentRecord,Setting,Quote,QuoteInput} from '../types'
+import type {Room,Pager,Bill,Account,Entry,PaymentRecord,Setting,Quote,QuoteInput,EnergyOverview,DepositInput,DepositQuote,EnergyKind} from '../types'
 const base='/property/finance/owner'
 const roomPath=(room:Room)=>`${base}/projects/${encodeURIComponent(room.projectId)}/spaces/${encodeURIComponent(room.spaceId)}`
 export const getRooms=()=>request<Room[]>(base+'/rooms')
-export const getBills=(room:Room,paid=false,page=0)=>request<Pager<Bill>&{totalAmount:string}>(`${roomPath(room)}/bills?paid=${paid}&pageIndex=${page}&pageSize=20`)
+export const getBills=(room:Room,paid=false,page=0,energy?:EnergyKind)=>request<Pager<Bill>&{totalAmount:string}>(`${roomPath(room)}/bills?paid=${paid}&pageIndex=${page}&pageSize=20${energy?'&energyType='+energy:''}`)
+export const getBill=(room:Room,id:string)=>request<Bill>(`${roomPath(room)}/bills/${encodeURIComponent(id)}`)
+export const getEnergy=(room:Room,month:string)=>request<EnergyOverview>(`${roomPath(room)}/energy?month=${encodeURIComponent(month)}`)
+export const quoteDeposit=(room:Room,input:DepositInput)=>request<DepositQuote>(`${roomPath(room)}/prepay/deposit/quote`,input)
 export const getAccounts=(room:Room)=>request<Account[]>(roomPath(room)+'/accounts')
 export const getEntries=(room:Room,id:string,page=0)=>request<Pager<Entry>>(`${roomPath(room)}/accounts/${encodeURIComponent(id)}/entries?pageIndex=${page}&pageSize=20`)
 export const getRecords=(room:Room,page=0)=>request<Pager<PaymentRecord>>(`${roomPath(room)}/records?pageIndex=${page}&pageSize=20`)

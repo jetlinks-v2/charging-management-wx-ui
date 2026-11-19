@@ -65,11 +65,12 @@ onBeforeUnmount(()=>{attempt++;dispose();clearSession(false);resetRooms();remove
   overscroll-behavior-y: contain;
   -webkit-overflow-scrolling: touch;
 }
-.official-module :deep(.app-shell) { min-height: 100%; max-width: 440px; padding-top: 0; padding-bottom: 0; }
+/* 嵌入时跟随宿主宽度，覆盖独立预览的居中限宽，避免内容与固定栏二次收窄。 */
+.official-module :deep(.app-shell.app-shell) { width: 100%; min-height: 100%; max-width: none; margin-inline: 0; padding-top: 0; padding-bottom: 0; box-shadow: none; }
 .official-module :deep(.van-config-provider) { min-height: 0; }
 .official-module :deep(.topbar) { height: 58px; padding-top: 0; }
-.official-module :deep(.bottom-nav),
-.official-module :deep(.dock) { max-width: 440px; }
+.official-module :deep(.app-shell .bottom-nav),
+.official-module :deep(.app-shell .dock) { max-width: none; }
 .official-module :deep(.van-popup) { max-height: 100%; }
 .official-module :deep(.van-dialog) { top: 50%; max-height: 100%; overflow-y: auto; }
 </style>

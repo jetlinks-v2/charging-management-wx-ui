@@ -49,29 +49,36 @@ const server=await createServer({configFile:false,root:process.cwd(),logLevel:'e
  name:'owner-fixture',enforce:'pre',
  resolveId(id,importer){if(id==='virtual:owner-entry')return '\0owner-entry';if(id==='virtual:owner-api'||id.endsWith('/api/http')||id==='./http'&&importer?.endsWith('/api/finance.ts'))return '\0owner-api';if(id==='@jetlinks-mobile-core')return '\0owner-core'},
  load(id){if(id==='\0owner-entry')return entry;if(id==='\0owner-api')return fixture;if(id==='\0owner-core')return core},
- configureServer(s){s.middlewares.use('/__owner-check',(_req,res)=>{res.setHeader('Content-Type','text/html');res.end('<!doctype html><link rel="icon" href="data:,"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;background:#edf3f8}</style><div id="app"></div><script type="module" src="/@id/__x00__owner-entry"></script>')})}
+ configureServer(s){s.middlewares.use('/__owner-check',(_req,res)=>{res.setHeader('Content-Type','text/html; charset=utf-8');res.end('<!doctype html><meta charset="utf-8"><link rel="icon" href="data:,"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;background:#edf3f8}.fixture-host{max-width:560px;margin:auto}.fixture-header{height:48px;display:grid;place-items:center;background:#fff}</style><div class="fixture-host"><header class="fixture-header">收费管理</header><div id="app"></div></div><script type="module" src="/@id/__x00__owner-entry"></script>')})}
 },vue()],resolve:{dedupe:['vue','vue-router']},server:{host:'127.0.0.1',port:0}})
 let browser
 const output='.agent-runtime/owner-redesign'
 try{
  await mkdir(output,{recursive:true});await server.listen();const origin=server.resolvedUrls.local[0]
  browser=await chromium.launch({channel:process.env.PLAYWRIGHT_CHANNEL||'chrome',headless:true})
- for(const width of [320,390,840]){
+ for(const width of [560,320,390,840]){
   const page=await browser.newPage({viewport:{width,height:900}}),errors=[]
   page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});page.on('response',r=>{if(r.status()>=400)console.error(r.status(),r.url())})
   await page.goto(origin+'__owner-check');try{await page.locator('.home-statement .money-display').waitFor()}catch(e){console.error(errors,await page.locator('body').innerText());throw e}
   const back=()=>page.getByRole('button',{name:'返回',exact:true}).click()
   async function layout(name){
-   const metrics=await page.locator('.app-shell').evaluate(el=>({width:el.getBoundingClientRect().width,overflow:document.documentElement.scrollWidth>innerWidth,local:el.scrollWidth>el.clientWidth+1}))
+   const metrics=await page.locator('.app-shell').evaluate(el=>{
+    const rect=el.getBoundingClientRect(),host=el.closest('.official-module').getBoundingClientRect()
+    const bars=[...el.querySelectorAll('.bottom-nav,.dock')].map(bar=>{const r=bar.getBoundingClientRect();return {left:r.left,right:r.right,bottom:r.bottom}})
+    return {width:rect.width,left:rect.left,right:rect.right,bottom:rect.bottom,host:{left:host.left,right:host.right,width:host.width,bottom:host.bottom},bars,overflow:document.documentElement.scrollWidth>innerWidth,local:el.scrollWidth>el.clientWidth+1}
+   })
    await page.screenshot({path:output+'/'+name+'-'+width+'.png'})
    if(metrics.local)console.error(await page.locator('.app-shell').evaluate(el=>[...el.querySelectorAll('*')].filter(e=>e.getBoundingClientRect().right>el.getBoundingClientRect().right+1).map(e=>({tag:e.tagName,cls:e.className,width:e.getBoundingClientRect().width,right:e.getBoundingClientRect().right}))))
-   assert.equal(metrics.overflow,false,JSON.stringify(metrics));assert.equal(metrics.local,false,JSON.stringify(metrics));assert.ok(metrics.width<=440)
+   assert.equal(metrics.overflow,false,JSON.stringify(metrics));assert.equal(metrics.local,false,JSON.stringify(metrics))
+   assert.ok(Math.abs(metrics.width-metrics.host.width)<=1,'business content must fill the host: '+JSON.stringify(metrics))
+   assert.ok(metrics.bottom>=metrics.host.bottom-1,'short pages must fill the host height: '+JSON.stringify(metrics))
+   for(const bar of metrics.bars)for(const edge of ['left','right','bottom'])assert.ok(Math.abs(bar[edge]-metrics.host[edge])<=1,'fixed bars must align with host edges: '+JSON.stringify(metrics))
    await page.screenshot({path:output+'/'+name+'-'+width+'.png'})
   }
   assert.equal(await page.locator('.bottom-nav>a').count(),4)
   const pair=await page.locator('.service-pair>a').evaluateAll(els=>els.map(e=>e.getBoundingClientRect().top))
   assert.equal(pair[0],pair[1]);await layout('home')
-  await page.getByRole('link',{name:/水电燃气.*查用量/}).click();await page.locator('.energy-card').first().waitFor()
+  await page.getByRole('link',{name:/水电燃气.*查用量/}).click();await page.locator('.energy-card').first().waitFor();await layout('energy')
   assert.ok((await page.locator('.energy-page').innerText()).includes('12.40'))
   await page.locator('.energy-card').first().getByRole('link',{name:'用量明细'}).click();await page.locator('.usage-row').first().waitFor();await layout('usage')
   await back();await page.locator('.energy-page').waitFor()
@@ -83,8 +90,8 @@ try{
   await back();await page.locator('#deposit-amount').waitFor();await back();await page.locator('.energy-page').waitFor();await back();await page.locator('.home-page').waitFor()
   await page.getByRole('link',{name:/物业费预存.*按月预存/}).click();await page.locator('.month-prices>button').first().waitFor();await page.waitForFunction(()=>!document.querySelector('.dock button').disabled)
   await page.getByRole('button',{name:'下一步'}).click();await page.locator('.confirmation-total').waitFor();await back();await page.locator('.prepay-page').waitFor();await back();await page.locator('.home-page').waitFor()
-  await page.getByRole('link',{name:'全部账单'}).click();await page.getByRole('button').filter({hasText:'燃气费'}).click();await page.getByRole('link',{name:'查看账单详情'}).click();await page.locator('.detail-list').waitFor()
-  const detail=await page.locator('.detail-list').innerText();for(const date of ['2026-10-01','2026-10-31','2026-11-01','2026-11-18','2026-11-30'])assert.ok(detail.includes(date));assert.ok(detail.includes('18.60'));await layout('bill')
+  await page.getByRole('link',{name:'全部账单'}).click();await page.getByRole('button').filter({hasText:'燃气费'}).click();await layout('bills');await page.getByRole('link',{name:'查看账单详情'}).click();await page.locator('.confirmation-total h2').filter({hasText:'燃气费'}).waitFor();await page.locator('.detail-list').waitFor()
+  const detail=await page.locator('.detail-list').innerText();for(const date of ['2026-10-01','2026-10-31','2026-11-01','2026-11-18','2026-11-30'])assert.ok(detail.includes(date),date+': '+detail);assert.ok(detail.includes('18.60'));await layout('bill')
   await back();await page.locator('.bills-page').waitFor();await back();await page.locator('.home-page').waitFor()
   await page.locator('.bottom-nav>a').nth(2).click();await page.locator('.account-row').first().waitFor();assert.equal(await page.locator('.account-row').count(),2);await layout('wallet')
   await page.evaluate(()=>window.__selectRoom('empty'));await page.waitForFunction(()=>!document.querySelector('.account-row'))
@@ -93,6 +100,7 @@ try{
   await page.evaluate(()=>{window.__energyFail=true;return window.__router.push('/applications/charging-app/energy')});await page.getByText('能源用量暂时无法获取',{exact:true}).waitFor();assert.equal(await page.locator('.energy-card').count(),0)
   await page.evaluate(()=>window.__energyFail=false);await page.getByRole('button',{name:'重新加载'}).click();await page.locator('.energy-card').first().waitFor()
   await page.evaluate(()=>window.__selectRoom('empty'));await page.waitForFunction(()=>document.querySelector('.energy-page')?.textContent.includes('暂未关联能源仪表'));assert.equal(await page.getByRole('link',{name:'预存充值',exact:true}).count(),0)
+  await page.evaluate(()=>window.__router.push('/applications/charging-app/profile'));await page.locator('.bottom-nav>a.active').filter({hasText:'我的'}).waitFor();await layout('profile')
   assert.deepEqual(errors,[]);await page.close();console.log(width+'px: real shell, layout, usage, deposit validation, billing dates, monthly prepay, room isolation, error retry and back chain passed')
  }
  // A fresh deep link has no module history. Back replaces with parent, then cannot escape the module.

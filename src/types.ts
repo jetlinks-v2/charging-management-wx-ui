@@ -14,8 +14,8 @@ export interface QuoteInput {settingId:string;activityId?:string;paidMonths:numb
 export interface QuoteLine {type:string;start:string;end:string;originalAmount:string;paidAmount:string;discountAmount:string}
 export interface Quote {id:string;status:string;expiresAt:number;businessDate:string;houseName:string;payerName:string;payAmount:string;originalAmount:string;lines:QuoteLine[]}
 export type EnergyKind='water'|'electricity'|'gas'
-export interface EnergyDay {date:string;usage:string|null;complete:boolean}
-export interface EnergyMeter {id:string;name:string;energyType:EnergyKind;usage:string|null;complete:boolean;lastTime:number|null;days:EnergyDay[]}
+export interface EnergyDay {date:string;usage?:string|null;complete:boolean}
+export interface EnergyMeter {id:string;name:string;energyType:EnergyKind;usage?:string|null;complete:boolean;lastTime?:number|null;days:EnergyDay[]}
 export interface EnergySetting {id:string;subjectId:string;subjectName:string;standardId:string;standardName:string;energyType:EnergyKind;price:string}
 export interface EnergyOverview {month:string;meters:EnergyMeter[];settings:EnergySetting[];accounts:Account[];usageError?:string}
 export interface DepositInput {settingId:string;amount:string}

@@ -22,11 +22,12 @@ const vm=reactive(useConfirmation()),periodsOpen=ref(false)
    <dl class="detail-list"><div v-if="vm.proposal.activityName"><dt>优惠活动</dt><dd>{{vm.proposal.activityName}}</dd></div><div><dt>费用合计</dt><dd>¥{{money(vm.proposal.quote.originalAmount)}}</dd></div><div v-if="vm.proposal.quote.originalAmount!==vm.proposal.quote.payAmount"><dt>优惠减免</dt><dd class="positive">−¥{{money(subtract(vm.proposal.quote.originalAmount,vm.proposal.quote.payAmount))}}</dd></div></dl>
    <button class="row block-link" @click="periodsOpen=true"><span>抵扣明细</span><span>{{vm.proposal.quote.lines.length}}期 <van-icon name="arrow"/></span></button>
   </section>
+  <p class="hint">暂未开通在线支付，请联系物业办理预存。</p>
   <van-notice-bar v-if="vm.error" :text="vm.error" color="#a83425" background="#fff0ed" wrapable/>
   <router-link v-if="vm.error||vm.expired" class="block-link" to="/prepay">返回重新选择</router-link>
  </template>
  <van-empty v-else description="请先选择预存月数"><router-link to="/prepay">选择预存月数</router-link></van-empty>
 </section>
-<div v-if="vm.proposal" class="dock"><div><span class="dock-label">预存金额</span><strong>¥{{money(vm.proposal.quote.payAmount)}}</strong></div><van-button type="primary" size="large" :disabled="vm.expired" :loading="vm.loading" @click="vm.confirm" native-type="button">确认支付</van-button></div>
+<div v-if="vm.proposal" class="dock"><div><span class="dock-label">预存金额</span><strong>¥{{money(vm.proposal.quote.payAmount)}}</strong></div><van-button type="primary" size="large" disabled native-type="button">暂未开通在线支付</van-button></div>
 <van-popup v-model:show="periodsOpen" class="owner-popup" position="bottom" round closeable :teleport="popupTarget" safe-area-inset-bottom><h2 class="popup-title">抵扣明细</h2><div class="popup-content"><PeriodLines v-if="vm.proposal" :quote="vm.proposal.quote"/></div></van-popup>
 </template>

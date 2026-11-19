@@ -8,9 +8,9 @@ import type {EnergyKind,EnergyOverview} from '../types'
 
 /** 沿用采集端的有效区间，部分数据单独标识；无读数不能以零用量显示。 */
 export function energySummary(data:EnergyOverview|undefined,kind:EnergyKind){
- const meters=data?.meters.filter(m=>m.energyType===kind)||[],available=meters.filter(m=>m.usage!==null)
+ const meters=data?.meters.filter(m=>m.energyType===kind)||[],available=meters.filter(m=>m.usage!=null)
  return {kind,meters,usage:available.length?sumUsage(available.map(m=>m.usage!)):undefined,
-  complete:!!meters.length&&meters.every(m=>m.complete&&m.usage!==null),
+  complete:!!meters.length&&meters.every(m=>m.complete&&m.usage!=null),
   lastTime:meters.reduce((latest,m)=>Math.max(latest,m.lastTime||0),0)||undefined,
   balance:total((data?.accounts||[]).filter(a=>data?.settings.some(s=>s.energyType===kind&&s.subjectId===a.subjectId&&s.standardId===a.standardId)).map(a=>a.available))}
 }

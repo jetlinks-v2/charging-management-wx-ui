@@ -27,7 +27,8 @@ export async function request(path,body){
  if(path.includes('/energy?')){
   if(window.__energyFail)throw new ApiError('能源用量暂时无法获取',503);
   const month=url.searchParams.get('month');return {month,settings:empty?[]:settings,accounts:empty?[]:accounts,meters:empty?[]:[
-   {id:'water-meter',name:'住宅水表',energyType:'water',usage:'12.40',complete:false,lastTime:1794970000000,days:Array.from({length:18},(_,i)=>({date:month+'-'+String(i+1).padStart(2,'0'),usage:i===2?null:'0.688888888889',complete:i!==2}))},
+   {id:'water-meter',name:'住宅水表',energyType:'water',usage:'12.40',complete:false,lastTime:1794970000000,days:Array.from({length:18},(_,i)=>({date:month+'-'+String(i+1).padStart(2,'0'),...(i===2?{}:{usage:'0.688888888889'}),complete:i!==2}))},
+   {id:'water-empty',name:'未采集水表',energyType:'water',complete:false,days:[{date:month+'-03',complete:false}]},
    {id:'gas-meter',name:'住宅燃气表',energyType:'gas',usage:'18.60',complete:true,lastTime:1794970000000,days:[]}]};
  }
  if(path.includes('/bills/')){const result=bills.find(b=>path.endsWith('/'+b.id));if(!result||empty)throw new ApiError('未找到当前房屋的本人账单',404);return result}
@@ -80,6 +81,10 @@ try{
   assert.equal(pair[0],pair[1]);await layout('home')
   await page.getByRole('link',{name:/水电燃气.*查用量/}).click();await page.locator('.energy-card').first().waitFor();await layout('energy')
   assert.ok((await page.locator('.energy-page').innerText()).includes('12.40'))
+  const beforeMonth=await page.evaluate(()=>window.__calls.filter(c=>c.path.includes('/energy?')).length)
+  await page.getByRole('button',{name:'选择用量月份'}).click();await page.getByRole('button',{name:'取消',exact:true}).click()
+  assert.equal(await page.evaluate(()=>window.__calls.filter(c=>c.path.includes('/energy?')).length),beforeMonth)
+  await page.getByRole('button',{name:'选择用量月份'}).click();await page.getByRole('button',{name:'确认',exact:true}).click();await page.locator('.energy-card').first().waitFor()
   await page.locator('.energy-card').first().getByRole('link',{name:'用量明细'}).click();await page.locator('.usage-row').first().waitFor();await layout('usage')
   await back();await page.locator('.energy-page').waitFor()
   await page.locator('.energy-card').first().getByRole('link',{name:'预存充值'}).click();await page.locator('#deposit-amount').waitFor()
@@ -89,7 +94,10 @@ try{
   assert.equal(await page.evaluate(()=>window.__calls.filter(c=>c.path.includes('/prepay/deposit/quote')).at(-1).body.amount),'100.10');await layout('deposit-confirm')
   await back();await page.locator('#deposit-amount').waitFor();await back();await page.locator('.energy-page').waitFor();await back();await page.locator('.home-page').waitFor()
   await page.getByRole('link',{name:/物业费预存.*按月预存/}).click();await page.locator('.month-prices>button').first().waitFor();await page.waitForFunction(()=>!document.querySelector('.dock button').disabled)
-  await page.getByRole('button',{name:'下一步'}).click();await page.locator('.confirmation-total').waitFor();await back();await page.locator('.prepay-page').waitFor();await back();await page.locator('.home-page').waitFor()
+  await page.getByRole('button',{name:'下一步'}).click();await page.locator('.confirmation-total').waitFor()
+  assert.equal(await page.getByRole('button',{name:'暂未开通在线支付'}).isDisabled(),true)
+  assert.ok((await page.locator('.confirm-page').innerText()).includes('请联系物业办理预存'))
+  await back();await page.locator('.prepay-page').waitFor();await back();await page.locator('.home-page').waitFor()
   await page.getByRole('link',{name:'全部账单'}).click();await page.getByRole('button').filter({hasText:'燃气费'}).click();await layout('bills');await page.getByRole('link',{name:'查看账单详情'}).click();await page.locator('.confirmation-total h2').filter({hasText:'燃气费'}).waitFor();await page.locator('.detail-list').waitFor()
   const detail=await page.locator('.detail-list').innerText();for(const date of ['2026-10-01','2026-10-31','2026-11-01','2026-11-18','2026-11-30'])assert.ok(detail.includes(date),date+': '+detail);assert.ok(detail.includes('18.60'));await layout('bill')
   await back();await page.locator('.bills-page').waitFor();await back();await page.locator('.home-page').waitFor()
@@ -99,7 +107,7 @@ try{
   await page.evaluate(()=>window.__selectRoom('room'));await page.locator('.account-row').first().waitFor()
   await page.evaluate(()=>{window.__energyFail=true;return window.__router.push('/applications/charging-app/energy')});await page.getByText('能源用量暂时无法获取',{exact:true}).waitFor();assert.equal(await page.locator('.energy-card').count(),0)
   await page.evaluate(()=>window.__energyFail=false);await page.getByRole('button',{name:'重新加载'}).click();await page.locator('.energy-card').first().waitFor()
-  await page.evaluate(()=>window.__selectRoom('empty'));await page.waitForFunction(()=>document.querySelector('.energy-page')?.textContent.includes('暂未关联能源仪表'));assert.equal(await page.getByRole('link',{name:'预存充值',exact:true}).count(),0)
+  await page.evaluate(()=>window.__selectRoom('empty'));await page.waitForFunction(()=>document.querySelector('.energy-page')?.textContent.includes('暂无用量记录'));assert.equal(await page.getByRole('link',{name:'预存充值',exact:true}).count(),0)
   await page.evaluate(()=>window.__router.push('/applications/charging-app/profile'));await page.locator('.bottom-nav>a.active').filter({hasText:'我的'}).waitFor();await layout('profile')
   assert.deepEqual(errors,[]);await page.close();console.log(width+'px: real shell, layout, usage, deposit validation, billing dates, monthly prepay, room isolation, error retry and back chain passed')
  }

@@ -9,11 +9,13 @@ import {useRoute} from 'vue-router'
 import {energyKind,energyKinds,energyTypes} from '../services/energy'
 import RoomSwitcher from '../components/RoomSwitcher.vue'
 import LoadState from '../components/LoadState.vue'
+import SelectField from '../components/mobile/SelectField.vue'
 import {getBills} from '../api/finance'
 import {useRoomPage} from '../hooks/useRoomData'
 import {money} from '../services/format'
 const route=useRoute(),mode=ref(route.query.paid==='true'?'paid':'unpaid'),kind=ref(energyKind(route.query.type)||''),paid=computed(()=>mode.value==='paid'),vm=reactive(useRoomPage((room,page)=>getBills(room,paid.value,page,energyKind(kind.value))))
 const expanded=ref<string[]>([])
+const subjectOptions=[{value:'',label:'全部科目'},...energyKinds.map(value=>({value,label:energyTypes[value].name}))]
 watch([mode,kind],()=>{expanded.value=[];void vm.load(true)})
 watch(()=>route.query.type,value=>{kind.value=energyKind(value)||''})
 function toggle(id:string){expanded.value=expanded.value.includes(id)?expanded.value.filter(v=>v!==id):[...expanded.value,id]}
@@ -21,7 +23,7 @@ function toggle(id:string){expanded.value=expanded.value.includes(id)?expanded.v
 <template>
 <section class="page bills-page">
  <RoomSwitcher/>
- <label class="bill-filter">收费科目<select v-model="kind" aria-label="账单收费科目"><option value="">全部科目</option><option v-for="value in energyKinds" :key="value" :value="value">{{energyTypes[value].name}}</option></select></label>
+ <SelectField v-model="kind" class="bill-filter" label="收费科目" title="选择收费科目" :clearable="false" :options="subjectOptions"/>
  <div class="page-tabs"><van-tabs v-model:active="mode"><van-tab name="unpaid" title="待缴费用"/><van-tab name="paid" title="已缴费用"/></van-tabs></div>
  <LoadState :loading="vm.loading&&!vm.rows.length" :error="vm.error" :empty="!vm.rows.length" empty-text="暂无对应账单" @retry="vm.load(true)">
   <div class="record-stack">

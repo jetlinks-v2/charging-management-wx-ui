@@ -33,3 +33,13 @@ test('能源余额必须同时匹配房屋设置的科目和标准，不合并�
   {id:'c',balance:'222.00',available:'222.00',subjectId:'electricity',standardId:'current'}]}
  assert.equal(energySummary(data,'water').balance,'80.00');assert.equal(energySummary(data,'gas').balance,'0.00')
 })
+
+test('接口省略空用量字段时仍显示已知用量，不崩溃也不把缺失计为零',()=>{
+ const empty={id:'empty',name:'未采集仪表',energyType:'water',complete:false,days:[{date:'2026-10-01',complete:false}]} as EnergyMeter
+ const known={id:'known',name:'已采集仪表',energyType:'water',complete:true,usage:'12.00',days:[]} as EnergyMeter
+ const data:EnergyOverview={month:'2026-10',meters:[empty],accounts:[],settings:[]}
+ assert.equal(energySummary(data,'water').usage,undefined)
+ data.meters.push(known)
+ assert.equal(energySummary(data,'water').usage,'12.00')
+ assert.equal(energySummary(data,'water').complete,false)
+})
